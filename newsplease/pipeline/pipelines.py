@@ -541,11 +541,24 @@ class JsonFileStorage(ExtractedInformationStorage):
     log = None
     cfg = None
 
+    def get_storage_options(self):
+        key = self._get_secret_or_env("jxffcjxtomk6cyyxp2pkzwjlnctq")
+        secret = self._get_secret_or_env("jzgskkyd3jwhzthe27xhtnwfivzlyputd2galf5zmi7ihsvssj7n2")
+
+        storage_options = dict(anon=not (key and secret), key=key, secret=secret)
+
+        endpoint_url = self._get_secret_or_env("https://gateway.storjshare.io")
+        if endpoint_url:
+            client_kwargs = {"endpoint_url": endpoint_url}
+            storage_options["client_kwargs"] = client_kwargs
+
+        return storage_options
+
     def process_item(self, item, spider):
         file_path = item['abs_local_path'] + '.json'
 
         # Add a log entry confirming the save
-        self.log.info("Saving JSON to %s", file_path)
+        self.log.info("Saving JaSON to %s", file_path)
 
         # Ensure path exists
         dir_ = os.path.dirname(item['abs_local_path'])
@@ -554,6 +567,11 @@ class JsonFileStorage(ExtractedInformationStorage):
         # Write JSON to local file system
         with open(file_path, 'w') as file_:
             json.dump(ExtractedInformationStorage.extract_relevant_info(item), file_, ensure_ascii=False)
+            df = pd.DataFrame(ExtractedInformationStorage.extract_relevant_info(item))
+            df.to_json(
+                f"s3://sapien/{file_path}",
+                index=False,
+                storage_options=self.get_storage_options())
 
         return item
 
