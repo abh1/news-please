@@ -4,6 +4,9 @@
   # Every URL has to be in an array-object in "base_urls".
   # The same URL in combination with the same crawler may only appear once in this array.
   "base_urls" : [
-    
+    		{
+			"url": "http://www.nytimes.com/",
+			"crawler": "RssCrawler"
+		},
   ]
 }
