@@ -24,7 +24,7 @@ news-please is an open source, easy-to-use news crawler that extracts structured
       author='Felix Hamborg',
       author_email='felix.hamborg@uni-konstanz.de',
       url='https://github.com/fhamborg/news-please',
-      download_url='https://github.com/fhamborg/news-please',
+      download_url='https://github.com/abh1/news-please',
       license='Apache License 2.0',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,

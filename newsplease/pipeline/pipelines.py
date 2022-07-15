@@ -6,6 +6,7 @@ import datetime
 import json
 import logging
 import os.path
+
 import sys
 
 import pymysql
@@ -542,12 +543,12 @@ class JsonFileStorage(ExtractedInformationStorage):
     cfg = None
 
     def get_storage_options(self):
-        key = self._get_secret_or_env("jxffcjxtomk6cyyxp2pkzwjlnctq")
-        secret = self._get_secret_or_env("jzgskkyd3jwhzthe27xhtnwfivzlyputd2galf5zmi7ihsvssj7n2")
+        key = "jxffcjxtomk6cyyxp2pkzwjlnctq"
+        secret = "jzgskkyd3jwhzthe27xhtnwfivzlyputd2galf5zmi7ihsvssj7n2"
 
         storage_options = dict(anon=not (key and secret), key=key, secret=secret)
 
-        endpoint_url = self._get_secret_or_env("https://gateway.storjshare.io")
+        endpoint_url = "https://gateway.storjshare.io"
         if endpoint_url:
             client_kwargs = {"endpoint_url": endpoint_url}
             storage_options["client_kwargs"] = client_kwargs
@@ -571,7 +572,7 @@ class JsonFileStorage(ExtractedInformationStorage):
             df.to_json(
                 f"s3://sapien/{file_path}",
                 index=False,
-                storage_options=self.get_storage_options())
+                storage_options=self.get_storage_options(), orient='table')
 
         return item
 

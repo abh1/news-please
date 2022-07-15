@@ -4,13 +4,15 @@ RUN apt-get update && apt-get install -y npm curl git make gcc python-dev libffi
 
 
 # Create app directory
-RUN mkdir -p /Users/abhinavsharma/sn/SapienPayout/News_Feed/
-WORKDIR /Users/abhinavsharma/sn/SapienPayout/News_Feed/
+RUN mkdir -p /News_Feed/
+WORKDIR /News_Feed/
 
 COPY ./ .
 
 RUN git clone https://github.com/abh1/news-please.git
 RUN pip3 install -r requirements.txt
+RUN pip3 install pandas==1.4.3
+RUN pip3 install s3fs
 
 COPY docker.sh /
 RUN chmod +x /docker.sh
